@@ -36,6 +36,7 @@ class PackagesManager:
                                                      dumps(r_hdr, indent=4)
                                                      )
                   )
+            return
         outfile = self.RepoName + '.bz2'
         with open(outfile, 'wb') as f:
             copyfileobj(r.raw, f)
