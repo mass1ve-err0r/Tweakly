@@ -34,10 +34,13 @@ class MongoDBHandler:
         return
 
     def getPackage(self, identifier: str):
-        # rgx = "^" + identifier
-        # query_t = {"Name": {"$regex": rgx}}
-        query_t = {"Name": identifier}
-        rv = self.pkgHandler.find_one(query_t)
+        rgx = "^" + identifier
+        query_t = {"Name": {"$regex": rgx}}
+        # query_t = {"Name": identifier}
+        rv = []
+        rv_c = self.pkgHandler.find(query_t)
+        for _pkg in rv_c:
+            rv.append(_pkg)
         return rv
 
 
