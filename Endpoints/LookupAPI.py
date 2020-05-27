@@ -11,7 +11,7 @@ TwickdMon = PackagesManager("twickd", "https://repo.twickd.com/Packages.bz2")
 isRefreshing = False
 
 
-@app.route('/api/tList')
+@app.route('/api/refreshTweaks')
 @jwt_required
 def refreshBro():
     global isRefreshing
