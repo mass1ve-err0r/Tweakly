@@ -34,7 +34,9 @@ class MongoDBHandler:
         return
 
     def getPackage(self, identifier: str):
-        query_t = {"Package": identifier}
+        # rgx = "^" + identifier
+        # query_t = {"Name": {"$regex": rgx}}
+        query_t = {"Name": identifier}
         rv = self.pkgHandler.find_one(query_t)
         return rv
 
