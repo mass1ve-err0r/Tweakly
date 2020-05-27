@@ -20,7 +20,7 @@ class PackagesManager:
                     "Connection": "keep-alive"
                     }
 
-    def refreshPackagesFile(self) -> int:
+    def refreshPackagesFile(self) -> None:
         print("[+]: refreshing....")
         r_hdr = self.hdr
         r = get(url=self.RepoURL,
@@ -36,22 +36,20 @@ class PackagesManager:
                                                      dumps(r_hdr, indent=4)
                                                      )
                   )
-            return 1
         outfile = self.RepoName + '.bz2'
         with open(outfile, 'wb') as f:
             copyfileobj(r.raw, f)
-            return 0
 
-    def extactPackagesFile(self) -> int:
+    def extactPackagesFile(self) -> None:
         print("[+]: extracting...")
         outfile = self.RepoName + ".txt"
         infile = self.RepoName + ".bz2"
         try:
             with BZ2File(infile) as fr, open(outfile, "wb") as fw:
                 copyfileobj(fr, fw)
-                return 0
+                return
         except Exception:
-            return 1
+            return
 
     def parsePackages(self) -> None:
         print("[+]: parsing...")
@@ -76,9 +74,17 @@ class PackagesManager:
                             entry['is_paid'] = False
                     entry[s[0]] = s[1].strip()
 
-    def returnPackage(self, identifier: str):
+    def refreshRepo(self):
+        self.refreshPackagesFile()
+        self.extactPackagesFile()
+        self.parsePackages()
+        return
+
+    def getPackage(self, identifier: str):
         print("[+]: getting...")
         _pkg = self.Mongo.getPackage(identifier)
+        if _pkg is None:
+            return _pkg
         rv = {
             "Name": _pkg['Name'],
             "Version": _pkg['Version'],
