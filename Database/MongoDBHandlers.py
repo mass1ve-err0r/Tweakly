@@ -1,20 +1,20 @@
-import urllib.parse
-import pymongo
+from urllib.parse import quote_plus
+from pymongo import MongoClient
 from os import environ as env
 
-mdbuser = urllib.parse.quote_plus(env.get('MNG_USER'))
-mdbpass = urllib.parse.quote_plus(env.get('MNG_PASS'))
+mdbuser = quote_plus(env.get('MNG_USER'))
+mdbpass = quote_plus(env.get('MNG_PASS'))
 mdbaddress = env.get('MNG_ADDR')
 mdbTargetDB = env.get('MNG_DB')
 
 
 class MongoDBHandler:
     def __init__(self, repoName: str):
-        self.client = pymongo.MongoClient("mongodb://" + mdbuser \
-                                          + ":" + mdbpass \
-                                          + "@" + mdbaddress \
-                                          + "/?authSource=" + mdbTargetDB \
-                                          + "&authMechanism=SCRAM-SHA-256")
+        self.client = MongoClient("mongodb://" + mdbuser \
+                                  + ":" + mdbpass \
+                                  + "@" + mdbaddress \
+                                  + "/?authSource=" + mdbTargetDB \
+                                  + "&authMechanism=SCRAM-SHA-256")
         self.dbHandle = self.client['tweakservice']
         self.pkgHandler = self.dbHandle[repoName]
 
@@ -46,11 +46,11 @@ class MongoDBHandler:
 
 class TokenDBHandler:
     def __init__(self):
-        self.client = pymongo.MongoClient("mongodb://" + mdbuser \
-                                          + ":" + mdbpass \
-                                          + "@" + mdbaddress \
-                                          + "/?authSource=" + mdbTargetDB \
-                                          + "&authMechanism=SCRAM-SHA-256")
+        self.client = MongoClient("mongodb://" + mdbuser \
+                                  + ":" + mdbpass \
+                                  + "@" + mdbaddress \
+                                  + "/?authSource=" + mdbTargetDB \
+                                  + "&authMechanism=SCRAM-SHA-256")
         self.dbHandle = self.client['tweakservice']
         self.vtokenHandler = self.dbHandle["vtokens"]
         self.btokenHandler = self.dbHandle["btokens"]
