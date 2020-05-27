@@ -81,18 +81,22 @@ class PackagesManager:
         return
 
     def getPackage(self, identifier: str):
-        print("[+]: getting...")
-        _pkg = self.Mongo.getPackage(identifier)
-        if _pkg is None:
-            return _pkg
-        rv = {
-            "Name": _pkg['Name'],
-            "Version": _pkg['Version'],
-            "Description": _pkg['Description'],
-            "Author": _pkg['Author'],
-            "IconURL": _pkg['Icon'],
-            "Depiction": _pkg['Depiction'],
-            "Size": _pkg['Size'],
-            "Paid": _pkg['is_paid']
-        }
+        _pkgList = self.Mongo.getPackage(identifier)
+        if _pkgList is None:
+            return None
+        if len(_pkgList) == 0:
+            return None
+        rv = []
+        for _pkg in _pkgList:
+            rv_o = {
+                "Name": _pkg['Name'],
+                "Version": _pkg['Version'],
+                "Description": _pkg['Description'],
+                "Author": _pkg['Author'],
+                "IconURL": _pkg['Icon'],
+                "Depiction": _pkg['Depiction'],
+                "Size": _pkg['Size'],
+                "Paid": _pkg['is_paid']
+            }
+            rv.append(rv_o)
         return rv
