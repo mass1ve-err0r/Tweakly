@@ -36,7 +36,7 @@ If you got everything, make sure a simple Flask "Hello World" runs and then proc
 ### Installation:
 1. Deploy Flask to any WSGI of choice. The prerequisite should have this already covered, so Flask itself is already able to run.
 
-2. Upload Tweakly to your server, configure to your liking and **before** launching, add back the function to obtain a token (in `LookupAPI.py`).
+2. Upload Tweakly to your server, configure to your liking and **before** launching, add back the function to obtain a token (in `Authorization.py`).
 
 3. Launch for the Tweakly first time and get a token. Once you got the token, terminate Tweakly.
 
