@@ -55,6 +55,8 @@ This is solely done to avoid any further maintenance problems/ issues with Tweak
   This will ensure that each token will automatically be revoked. You will have to issue new tokens for each of your users.
 - **_I want to include XY repository for my variant of Tweakly !_**
 	- Easy, just add another `PackageManager`-object and add the according fields to the return JSON.
+- **_Y no app-factory pattern ???_**
+	- because this just isn't that big of a Flask-app lmao. Circular imports are dodged by importing in order.
 
 ## Return JSON Format
 Example JSON for Gesto:
