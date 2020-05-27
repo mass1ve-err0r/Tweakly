@@ -17,6 +17,7 @@ def refreshBro():
     global isRefreshing
     if isRefreshing:
         return jsonify({"status": "please wait"})
+    isRefreshing = True
     chariz_refresh = Thread(target=CharizMon.refreshRepo)
     dynastic_refresh = Thread(target=DynasticMon.refreshRepo)
     packix_refresh = Thread(target=PackixMon.refreshRepo)
@@ -26,7 +27,6 @@ def refreshBro():
     dynastic_refresh.start()
     packix_refresh.start()
     twickd_refresh.start()
-    isRefreshing = True
 
     chariz_refresh.join()
     dynastic_refresh.join()
