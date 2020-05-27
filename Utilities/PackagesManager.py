@@ -88,6 +88,8 @@ class PackagesManager:
             return None
         rv = []
         for _pkg in _pkgList:
+            sileoURL = "sileo://package/" + _pkg['Package']
+            zbraURL = "zbra://packages/" + _pkg['Package']
             rv_o = {
                 "Name": _pkg['Name'],
                 "Version": _pkg['Version'],
@@ -96,7 +98,9 @@ class PackagesManager:
                 "IconURL": _pkg['Icon'],
                 "Depiction": _pkg['Depiction'],
                 "Size": _pkg['Size'],
-                "Paid": _pkg['is_paid']
+                "Paid": _pkg['is_paid'],
+                "SileoURL": sileoURL,
+                "ZebraURL": zbraURL
             }
             rv.append(rv_o)
         return rv
