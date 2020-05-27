@@ -21,7 +21,6 @@ class PackagesManager:
                     }
 
     def refreshPackagesFile(self) -> None:
-        print("[+]: refreshing....")
         r_hdr = self.hdr
         r = get(url=self.RepoURL,
                 allow_redirects=True,
@@ -42,7 +41,6 @@ class PackagesManager:
             copyfileobj(r.raw, f)
 
     def extactPackagesFile(self) -> None:
-        print("[+]: extracting...")
         outfile = self.RepoName + ".txt"
         infile = self.RepoName + ".bz2"
         try:
@@ -53,7 +51,6 @@ class PackagesManager:
             return
 
     def parsePackages(self) -> None:
-        print("[+]: parsing...")
         infile = self.RepoName + ".txt"
         with open(infile, 'r') as f:
             entry = {}
