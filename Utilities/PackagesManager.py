@@ -67,6 +67,8 @@ class PackagesManager:
                     entry.clear()
                 else:
                     s = line.strip().split(":", 1)
+                    if len(s) != 2:
+                        continue
                     if "Tag" == s[0]:
                         if "cydia::commercial" in s[1]:
                             entry['is_paid'] = True
