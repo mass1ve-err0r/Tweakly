@@ -56,6 +56,41 @@ This is solely done to avoid any further maintenance problems/ issues with Tweak
 - **_I want to include XY repository for my variant of Tweakly !_**
 	- Easy, just add another `PackageManager`-object and add the according fields to the return JSON.
 
+## Return JSON Format
+Example JSON for Gesto:
+```json
+{
+	"dynastic": 
+	[
+			{
+			"Author": "Alessandro Chiarlitti and Gabriele Filipponi",
+			"Depiction": "https://repo.dynastic.co/depiction/260789741820051456/",
+			"Description": "True Multitasking — See Gesto (cydia://package/com.blackhole.Gesto) for iOS 11/12 compatibility",
+			"IconURL": "https://repo.dynastic.co/data/static/version/317726058596007936/317726058868637696?size=180",
+			"Name": "Gesto for iOS 13",
+			"Paid": true,
+			"SileoURL": "sileo://package/com.blackhole.Gesto13",
+			"Size": "792828",
+			"Version": "1.1.1",
+			"ZebraURL": "zbra://packages/com.blackhole.Gesto13"
+			},
+			{
+			"Author": "Alessandro Chiarlitti and Gabriele Filipponi",
+			"Depiction": "https://repo.dynastic.co/depiction/176619415092068352/",
+			"Description": "True Multitasking — See Gesto for iOS 13 (cydia://package/com.blackhole.Gesto13) for iOS 13 compatibility.",
+			"IconURL": "https://repo.dynastic.co/data/static/version/201365877868724224/201365878086828032?size=180",
+			"Name": "Gesto for iOS 11/12",
+			"Paid": true,
+			"SileoURL": "sileo://package/com.blackhole.Gesto",
+			"Size": "1158208",
+			"Version": "1.3.2",
+			"ZebraURL": "zbra://packages/com.blackhole.Gesto"
+			}
+	]
+}
+```
+You basically get a JSON Object containing 4 potential lists with dictionaries inside representing Packages.
+
 ## Credits
 - My swedish pigeon gang - y'all rock lmao
 - My friends and family
