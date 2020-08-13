@@ -1,43 +1,16 @@
-from app import app
+from wsgi import app, lim
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required
 from Utilities.PackagesManager import PackagesManager
-from threading import Thread
 
 CharizMon = PackagesManager("chariz", "https://repo.chariz.com/Packages.bz2")
 DynasticMon = PackagesManager("dynastic", "https://repo.dynastic.co/Packages.bz2")
 PackixMon = PackagesManager("packix", "https://repo.packix.com/Packages.bz2")
 TwickdMon = PackagesManager("twickd", "https://repo.twickd.com/Packages.bz2")
-isRefreshing = False
 
 
-@app.route('/api/refreshTweaks')
-@jwt_required
-def refreshBro():
-    global isRefreshing
-    if isRefreshing:
-        return jsonify({"status": "please wait"})
-    isRefreshing = True
-    chariz_refresh = Thread(target=CharizMon.refreshRepo)
-    dynastic_refresh = Thread(target=DynasticMon.refreshRepo)
-    packix_refresh = Thread(target=PackixMon.refreshRepo)
-    twickd_refresh = Thread(target=TwickdMon.refreshRepo)
-
-    chariz_refresh.start()
-    dynastic_refresh.start()
-    packix_refresh.start()
-    twickd_refresh.start()
-
-    chariz_refresh.join()
-    dynastic_refresh.join()
-    packix_refresh.join()
-    twickd_refresh.join()
-
-    isRefreshing = False
-    return jsonify({"status": "success"})
-
-
-@app.route('/api/lookup')
+@app.route('/v1/tweakly/lookup', subdomain="api")
+@lim.limit("100/minute")
 @jwt_required
 def searchTweak():
     if request.args.get('Name') != None:
