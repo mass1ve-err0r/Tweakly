@@ -1,22 +1,20 @@
-from app import JWTManager
-from Database.MongoDBHandlers import TokenDBHandler
-
-MongoTokens = TokenDBHandler()
-
-
-@JWTManager.token_in_blacklist_loader
-def check_if_token_in_blacklist(decrypted_token):
-    jti = decrypted_token['jti']
-    rv = MongoTokens.getBlacklistedToken(jti)
-    if rv != None:
-        return True
-    return False
-
+from os import environ as env
+from flask import jsonify, request
+from wsgi import jwt, app
+from flask_jwt_extended import create_access_token, jwt_required
 
 '''
 # This route is temporarily disabled because we'll use a token which is indefinitely valid
-@app.route("/auth/get")
+@app.route('/v1/tweakly/xauth/getTokenOnce', subdomain="api")
 def cToken():
-    access_token = create_access_token(identity="BotAPIAccess", expires_delta=False)
+    ident_ = env.get('API_IDENTIFIER')
+    access_token = create_access_token(identity=ident_, expires_delta=False)
     return jsonify(access_token=access_token)
 '''
+
+
+@app.route('/v1/tweakly/protTest', subdomain="api")
+@jwt_required
+def test_route():
+    return "OK protected!"
+
