@@ -10,11 +10,7 @@ mdbTargetDB = env.get('MNG_DB')
 
 class MongoDBHandler:
     def __init__(self, repoName: str):
-        self.client = MongoClient("mongodb://" + mdbuser \
-                                  + ":" + mdbpass \
-                                  + "@" + mdbaddress \
-                                  + "/?authSource=" + mdbTargetDB \
-                                  + "&authMechanism=SCRAM-SHA-256")
+        self.client = MongoClient("mongodb://" + mdbuser + ":" + mdbpass + "@" + mdbaddress + "/?authSource=" + mdbTargetDB + "&authMechanism=SCRAM-SHA-256")
         self.dbHandle = self.client['tweakservice']
         self.pkgHandler = self.dbHandle[repoName]
 
@@ -41,37 +37,4 @@ class MongoDBHandler:
         rv_c = self.pkgHandler.find(query_t)
         for _pkg in rv_c:
             rv.append(_pkg)
-        return rv
-
-
-class TokenDBHandler:
-    def __init__(self):
-        self.client = MongoClient("mongodb://" + mdbuser \
-                                  + ":" + mdbpass \
-                                  + "@" + mdbaddress \
-                                  + "/?authSource=" + mdbTargetDB \
-                                  + "&authMechanism=SCRAM-SHA-256")
-        self.dbHandle = self.client['tweakservice']
-        self.vtokenHandler = self.dbHandle["vtokens"]
-        self.btokenHandler = self.dbHandle["btokens"]
-
-    def addBlacklistedToken(self, jwt_id: str):
-        query_t = {"jti": jwt_id}
-        self.btokenHandler.insert_one(query_t)
-        self.vtokenHandler.delete_one(query_t)
-        return
-
-    def addValidToken(self, jwt_id: str):
-        query_t = {"jti": jwt_id}
-        self.vtokenHandler.insert_one(query_t)
-        return
-
-    def getBlacklistedToken(self, jwt_id: str):
-        query = {"jti": jwt_id}
-        rv = self.btokenHandler.find_one(query)
-        return rv
-
-    def getValidToken(self, jwt_id: str):
-        query = {"jti": jwt_id}
-        rv = self.vtokenHandler.find_one(query)
         return rv
